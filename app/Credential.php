@@ -13,6 +13,7 @@ class Credential extends Model
      'created' => CreateCredentialEvent::class,
      'updated' => UpdateCredentialEvent::class,
      'deleted' => DeleteCredentialEvent::class
+
  ];
  protected $fillable = [
 

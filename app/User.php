@@ -3,8 +3,8 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -36,4 +36,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function getAdministrationsAttribute(){
+        $administrations = DB::table('administration_relations')
+            ->where('user_id',$this->id)
+            ->whereNull('deleted_at')
+            ->get();
+        return $administrations;
+    }
 }
