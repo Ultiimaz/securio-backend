@@ -13,17 +13,9 @@ class UserController extends Controller
 
     public function authenticate(Request $request)
     {
-        if(!$request->has('user_token'))
-        {
-            return [
-                'status' => 'error',
-                'message' => 'no message provided'
-            ];
-        }
-        $getInfo = Socialite::driver("facebook")->stateless()->userFromToken($request->user_token);
-        $user = $this->createUser($getInfo);
-        auth()->login($user);
-        return ['status' => 'success',$user];
+       $user = new User;
+       $user->fill($request->toArray());
+
     }
     function createUser($getInfo){
         $user = User::Where('provider_id', $getInfo->id)->first();
