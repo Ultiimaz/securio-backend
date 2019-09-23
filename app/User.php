@@ -5,10 +5,12 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\DB;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+
+    use Notifiable,HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -42,5 +44,9 @@ class User extends Authenticatable
             ->whereNull('deleted_at')
             ->get();
         return $administrations;
+    }
+    public function getAdministrationRoleAttribute()
+    {
+
     }
 }
