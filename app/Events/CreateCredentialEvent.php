@@ -16,11 +16,12 @@ class CreateCredentialEvent
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param $credential
      */
-    public function __construct()
+    public function __construct($credential)
     {
         //
+
     }
 
 
