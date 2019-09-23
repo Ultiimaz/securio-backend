@@ -4,49 +4,35 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Facades\DB;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-
     use Notifiable,HasApiTokens;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name', 'email', 'master_password',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
-        'password', 'remember_token',
+       'id',
+        'master_password',
+        'remember_token',
+        'provider',
+        'provider_id',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'administrations'
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function getAdministrationsAttribute(){
-        $administrations = DB::table('administration_relations')
-            ->where('user_id',$this->id)
-            ->whereNull('deleted_at')
-            ->get();
-        return $administrations;
-    }
-    public function getAdministrationRoleAttribute()
-    {
 
+    public function administrations()
+    {
+        return $this->hasMany(AdministrationRelation::class);
     }
+
 }
