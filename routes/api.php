@@ -12,3 +12,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
         'user' =>$request->user(),
         'administrations' => $administrations];
 });
+Route::middleware(['auth:api'])->resource('password','CredentialController');
+Route::post('/register','UserController@registerWithPassword');

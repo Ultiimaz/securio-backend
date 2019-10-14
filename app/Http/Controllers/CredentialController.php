@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Administration;
 use App\Credential;
 use http\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
+use Ramsey\Uuid\Uuid;
 
 class CredentialController extends Controller
 {
@@ -33,14 +37,19 @@ class CredentialController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
+     * @param Administration $administration
      * @return Credential
      */
-    public function store(Request $request)
+    public function store(Request $request,Administration $administration)
     {
         $credential = new Credential;
-        $credential->fill($request->toArray());
+        $credential->user_id = $request->user()->id;
+        $credential->administration_id = $administration->id;
+        $credential->hash = Crypt::encrypt($request->data);
         $credential->save();
-        return $credential;
+
+
+       return $credential;
     }
 
     /**
@@ -62,7 +71,7 @@ class CredentialController extends Controller
      */
     public function edit(Credential $credential)
     {
-        //
+
     }
 
     /**

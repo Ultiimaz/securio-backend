@@ -2,16 +2,18 @@
 
 namespace App;
 
+use BinaryCabin\LaravelUUID\Traits\HasUUID;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable,HasApiTokens;
 
+    use Notifiable,HasApiTokens,hasUuid;
+    protected $uuidFieldName = 'id';
     protected $fillable = [
-        'name', 'email', 'master_password',
+        'first_name','last_name', 'email', 'master_password',
     ];
 
     protected $hidden = [
