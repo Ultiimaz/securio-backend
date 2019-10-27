@@ -13,9 +13,11 @@ class Credential extends Model
 {
     use hasUUID;
     protected $fillable = [
-        'hash'
+        'application_name'
     ];
-
+    protected $hidden = [
+        'deleted_at','user_id',
+    ];
     protected $uuidFieldName = 'id';
     protected $dispatchesEvents = [
      'created' => CreateCredentialEvent::class,

@@ -20,7 +20,7 @@ class CredentialController extends Controller
      */
     public function index()
     {
-        //
+        return Auth::user()->credentials;
     }
 
     /**
@@ -46,6 +46,7 @@ class CredentialController extends Controller
         $credential->user_id = $request->user()->id;
         $credential->administration_id = $administration->id;
         $credential->hash = Crypt::encrypt($request->data);
+        $credential->application_name = $request->application_name;
         $credential->save();
 
 

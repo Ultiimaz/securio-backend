@@ -36,5 +36,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(AdministrationRelation::class);
     }
-
+    public function credentials()
+    {
+        return $this->hasMany(Credential::class,'user_id','id');
+    }
 }
